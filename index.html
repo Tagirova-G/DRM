@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твой Космический Навигатор: 2026-2027</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: #f3e8ff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #video-background video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        #video-background::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(14, 18, 38, 0.72);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        #hero {}
+
+        #starfield {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .constellation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+        }
+
+        .constellation .star {
+            position: absolute;
+            background-color: #ffe4e6;
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fda4af, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #bae6fd;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 1rem auto;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #0284c7, #f43f5e);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(244, 63, 94, 0.35);
+        }
+
+        .visual-block {
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .human-silhouette {
+            background: radial-gradient(circle, #38bdf8, transparent);
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            animation: glow 2s infinite alternate;
+        }
+
+        .crown-icon {
+            font-size: 4rem;
+            color: #fbbf24;
+            text-shadow: 0 0 20px #fbbf24;
+        }
+
+        .lightning-icon {
+            font-size: 4rem;
+            color: #fb7185;
+            animation: pulse 1s infinite;
+        }
+
+        .angel-wing {
+            font-size: 5rem;
+            color: #e0f2fe;
+            opacity: 0.85;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px #38bdf8; }
+            to { box-shadow: 0 0 30px #38bdf8, 0 0 60px #f43f5e; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        table {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        th {
+            background: rgba(56, 189, 248, 0.3);
+        }
+
+        #lucky-btn {
+            background: linear-gradient(45deg, #fbbf24, #fb7185);
+            color: #0e1226;
+            font-weight: bold;
+            margin: 2rem 0;
+        }
+
+        #fortune-display {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            p { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Видео фон -->
+    <div id="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="DRM.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Кнопка управления звуком -->
+    <button id="toggle-audio-btn"
+            style="
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.15);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                color: white;
+                font-size: 20px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+                transition: all 0.3s ease;
+            ">🔊</button>
+
+    <!-- Блок 1: Главный экран -->
+    <section id="hero">
+        <div id="starfield"></div>
+        <div class="constellation" id="cancer-constellation"></div>
+        <h1>Твой Космический Навигатор: 2026-2027</h1>
+        <p>Год, когда из подростка ты становишься собой настоящим.</p>
+        <p>Это не просто гороскоп, а твоя персональная карта на 14 лет. Весь год ты в центре собственного кино: всё крутится вокруг общения, стиля, друзей и первых по-настоящему взрослых решений.</p>
+        <button class="btn" onclick="showSection('manifest')">Активировать прогноз</button>
+    </section>
+
+    <!-- Блок 2: Манифест Личности -->
+    <section id="manifest" style="display:none;">
+        <h2>Твоё Настроение и Стиль Года</h2>
+        <div class="visual-block">
+            <div class="human-silhouette"></div>
+        </div>
+        <p>Год начинается под знаком Весов, а его главная планета — Венера прямо в 1-м доме. Тебе будет важно, чтобы всё было по-честному, красиво и по-доброму.</p>
+        <ul style="text-align: left; max-width: 600px; margin: 1rem auto;">
+            <li><strong>Главный вопрос года:</strong> Со мной считаются? Мне комфортно и меня принимают?</li>
+            <li><strong>Твоя фишка:</strong> Уверенность, творчество, музыка, свой стиль и умение договариваться.</li>
+            <li><strong>Важный нюанс:</strong> Венерой управляет Сатурн — крутой результат и внимание придут не просто так, а через терпение и работу над собой.</li>
+        </ul>
+        <button class="btn" onclick="showSection('career')">Продолжить</button>
+    </section>
+
+    <!-- Блок 3: Главная сцена года -->
+    <section id="career" style="display:none;">
+        <h2>Главная Сцена: Друзья и Мечты</h2>
+        <div class="visual-block">
+            <div class="crown-icon">👑</div>
+        </div>
+        <p>Самое мощное скопление энергии в 11-м доме (Марс, Юпитер и Кету) — это сфера тусовок, больших планов, подарков и первых заработков.</p>
+        <ul style="text-align: left; max-width: 600px; margin: 1rem auto;">
+            <li><strong>Марс и Юпитер:</strong> Драйв бороться за цели (спорт, проекты), новые крутые знакомства и поддержка от кого-то старшего.</li>
+            <li><strong>Кету (перезагрузка круга):</strong> Кто-то из старых друзей может отвалиться, или ты сам поймёшь, что вам не по пути. Так очищается твоё окружение.</li>
+        </ul>
+        <button class="btn" onclick="showSection('transformation')">Дальше</button>
+    </section>
+
+    <!-- Блок 4: Рутина и внутренний мир -->
+    <section id="transformation" style="display:none;">
+        <h2>Проверка на Взрослость</h2>
+        <div class="visual-block">
+            <div class="lightning-icon">⚡</div>
+        </div>
+        <p>Пока хочется выглядеть круто и мечтать по-крупному, Сатурн в 6-м доме и Солнце во 2-м напоминают про реальные дела и личные границы.</p>
+        <ul style="text-align: left; max-width: 600px; margin: 1rem auto;">
+            <li><strong>Дела вместо слов:</strong> Нельзя просто мечтать — успех зависит от того, как ты справляешься с учёбой, рутиной и доводишь начатое до конца.</li>
+            <li><strong>Разговоры с семьёй:</strong> Солнце во 2-м доме поднимет темы денег, учёбы и будущего — придётся спокойно отстаивать своё мнение.</li>
+            <li><strong>Глубокие эмоции:</strong> Период Луны принесёт сильные чувства и, возможно, первую серьёзную влюблённость. Не пугайся этого — так ты растёшь внутри.</li>
+        </ul>
+        <button class="btn" onclick="showSection('protection')">Продолжить</button>
+    </section>
+
+    <!-- Блок 5: Опора и поддержка -->
+    <section id="protection" style="display:none;">
+        <h2>Как Всё Сложится</h2>
+        <div class="visual-block">
+            <div class="angel-wing">🕊️</div>
+        </div>
+        <p>Меркурий в 1-м доме и мудрый Юпитер помогут тебе разобраться в себе, даже если в моменте станет непросто.</p>
+        <ul style="text-align: left; max-width: 600px; margin: 1rem auto;">
+            <li><strong>Глубокий взгляд:</strong> Ты начнёшь интересоваться более серьёзными темами — психологией, философией, смыслом поступков.</li>
+            <li><strong>Поддержка рядом:</strong> Любые переживания смягчатся через творчество, правильные книги или совет мудрого взрослого.</li>
+        </ul>
+        <button class="btn" onclick="showSection('advice')">Завершить</button>
+    </section>
+
+    <!-- Блок 6: Финальное Пожелание -->
+    <section id="advice" style="display:none;">
+        <h2>Твоя Формула на 2026</h2>
+        <table>
+            <tr>
+                <th>Сфера</th>
+                <th>Главная подсказка года</th>
+            </tr>
+            <tr>
+                <td>Отношения</td>
+                <td>Учись договариваться по-честному и без напряга, но держи свои границы.</td>
+            </tr>
+            <tr>
+                <td>Друзья</td>
+                <td>Не держись за тех, с кем уже не по пути — освободи место для новых людей.</td>
+            </tr>
+            <tr>
+                <td>Учёба и дела</td>
+                <td>Настоящая крутость — это умение держать слово и не бросать начатое на полпути.</td>
+            </tr>
+            <tr>
+                <td>Эмоции</td>
+                <td>Не бойся сильных чувств и влюблённостей: слушай себя и береги здоровье.</td>
+            </tr>
+        </table>
+        
+        <button id="lucky-btn" class="btn" onclick="showFortune()">Кнопка Удачи 🎯</button>
+        <div id="fortune-display">Нажми кнопку, чтобы получить космическое сообщение!</div>
+    </section>
+
+    <script>
+        // Create starry background
+        function createStarField() {
+            const starfield = document.getElementById('starfield');
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.style.position = 'absolute';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.backgroundColor = 'white';
+                star.style.borderRadius = '50%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.opacity = Math.random();
+                star.style.animation = `twinkle ${Math.random() * 5 + 3}s infinite`;
+                starfield.appendChild(star);
+            }
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes twinkle {
+                    0%, 100% { opacity: 0.2; }
+                    50% { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Create Libra constellation
+        function createCancerConstellation() {
+            const constellation = document.getElementById('cancer-constellation');
+            const positions = [
+                {x: 50, y: 20}, {x: 20, y: 45}, {x: 80, y: 45},
+                {x: 35, y: 75}, {x: 65, y: 75}, {x: 50, y: 90}
+            ];
+            
+            positions.forEach(pos => {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = '8px';
+                star.style.height = '8px';
+                star.style.left = pos.x + 'px';
+                star.style.top = pos.y + 'px';
+                star.style.boxShadow = '0 0 10px #fda4af';
+                constellation.appendChild(star);
+            });
+        }
+
+        // Navigation between sections
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'flex';
+        }
+
+        // Fortune messages
+        const fortunes = [
+            "✨ Ты в центре своего кино! Венера в 1-м доме усиливает твою харизму — смело проявляй свой стиль и творчество.",
+            "🤝 Сила дипломатии. Сегодня проще всего решить любой вопрос по-доброму и без лишнего напряга.",
+            "🔥 Драйв 11-го дома! Марс заряжает энергией — отличный день для спорта, соревнований и смелых целей.",
+            "🧹 Перезагрузка круга. Если кто-то отдаляется — не переживай, Вселенная освобождает место для твоих людей.",
+            "🧱 Настоящая крутость — в действии. Сделай одно скучное дело прямо сейчас, и оно откроет путь к крутому результату.",
+            "🧠 Глубокий инсайт. Меркурий подсказывает: задавай правильные вопросы и ищи суть, а не просто красивые слова.",
+            "💫 Поддержка рядом. Юпитер на твоей стороне — ответ на сложный вопрос придёт через книгу, разговор или мудрого взрослого.",
+            "🛡️ Держи границы! В разговоре с родителями или друзьями спокойно говори о том, что для тебя действительно важно.",
+            "🌊 Доверяй своим чувствам. Глубокие эмоции сегодня — это не слабость, а знак того, что ты взрослеешь.",
+            "🎯 Терпение окупается. Сатурн напоминает: быстрых чудес не бывает, но то, что ты строишь сам, останется с тобой надолго.",
+            "🌟 Амбиции на максимум! Мечтай по-крупному, но не забывай делать первый маленький шаг уже сегодня."
+        ];
+
+        function showFortune() {
+            const randomIndex = Math.floor(Math.random() * fortunes.length);
+            const fortuneDisplay = document.getElementById('fortune-display');
+            fortuneDisplay.textContent = fortunes[randomIndex];
+            fortuneDisplay.style.animation = 'pulse ';
+            setTimeout(() => {
+                fortuneDisplay.style.animation = '';
+            }, 500);
+        }
+
+        // Toggle audio button functionality
+        const video = document.querySelector('#video-background video');
+        const audioBtn = document.getElementById('toggle-audio-btn');
+
+        audioBtn.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false;
+                audioBtn.innerHTML = '🔇';
+            } else {
+                video.muted = true;
+                audioBtn.innerHTML = '🔊';
+            }
+        });
+
+        // Initialize on load
+        window.onload = function() {
+            createStarField();
+            createCancerConstellation();
+        };
+    </script>
+</body>
+</html>
